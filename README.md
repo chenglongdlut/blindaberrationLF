@@ -1,5 +1,8 @@
 # blindaberrationLF
-blind deblur using VDIP, code from [1]
+
+The method consits of two stage. 
+The first stage is blind deblur using VDIP, code from [1]
+The second stage is low rank approximation. the code of which is currently being organized.
 
 
 
