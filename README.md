@@ -1,2 +1,2 @@
 # blindaberrationLF
-blind deblur
+blind deblur using VDIP
