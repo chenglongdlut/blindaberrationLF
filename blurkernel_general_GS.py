@@ -17,21 +17,6 @@ def get_gaussian_kernel(kernel_size, sigma1,sigma2,rho,dtype):
 
     return gaussian_kernel
 ##
-def get_gaussian_kernel_fast(kernel_size, sigma1,sigma2,rho,dtype):
-    
-    gaussian_kernel = torch.zeros(int(kernel_size), int(kernel_size)).to('cuda')
-    radias = kernel_size // 2
-
-   
-    a=torch.linspace(-radias,radias,kernel_size).to('cuda')
-    b=torch.linspace(-radias,radias,kernel_size).to('cuda')
-    x,y=torch.meshgrid(a,b)
-    gaussian_kernel = torch.exp(-x ** 2/(2.0 * sigma1 ** 2)-2*rho*x*y/(2*sigma1*sigma2)-y ** 2 / (2.0 * sigma2 ** 2))
-
-
-    gaussian_kernel = gaussian_kernel / torch.sum(gaussian_kernel)
-
-    return gaussian_kernel
 
 
 
@@ -56,8 +41,8 @@ class Blurkernel(nn.Module):
     def forward(self):
 
         # print('<<<<<<<<self.sigma1,sigma2 rho:',self.sigma1,self.sigma2,self.rho)
-        # gaussian_kernel = get_gaussian_kernel_fast(self.kernel_size, self.sigma1, self.sigma2,self.rho,self.data_type)
-        gaussian_kernel = get_gaussian_kernel_fast(self.kernel_size, self.sigma1, self.sigma2,self.rho,self.data_type)
+   
+        gaussian_kernel = get_gaussian_kernel(self.kernel_size, self.sigma1, self.sigma2,self.rho,self.data_type)
 
         kernel_raw=gaussian_kernel.unsqueeze(0).unsqueeze(0)
 
